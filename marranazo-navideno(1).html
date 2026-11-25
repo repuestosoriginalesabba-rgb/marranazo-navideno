@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>El Marranazo Navideño</title>
+<style>
+:root{--gold:#d8ad48;--cream:#fff2d0;--wine:#702b3a}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#352716,#090909 62%);color:var(--cream);font-family:Arial,sans-serif}
+main{width:min(900px,94%);margin:auto;padding:20px 0 40px}
+header,.panel{background:#111;border:1px solid #80642d;border-radius:18px;padding:18px;margin-bottom:16px;text-align:center}
+.poster{display:block;width:min(100%,650px);height:auto;max-height:680px;object-fit:contain;margin:0 auto 16px;border-radius:12px}
+h1,h2{font-family:Georgia,serif;color:#f4d98b}
+h1{font-size:clamp(30px,7vw,52px);margin:10px 0}
+.tag{font-family:Georgia,serif;font-style:italic;font-size:20px}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}
+.info div{padding:13px;background:#19150e;border:1px solid #594725;border-radius:12px}
+.info small{display:block;color:#d8ad48;margin-bottom:5px}
+.note{color:#cbbd9d;font-size:14px;line-height:1.5}
+.legend{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:12px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.numbers{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:15px}
+.num{padding:10px 0;border:1px solid #bda66f;border-radius:7px;background:#f4e5bf;color:#211b10;font-weight:bold;cursor:pointer}
+.num.chosen{background:var(--gold)}
+.num.sold{background:var(--wine);color:white;text-decoration:line-through;cursor:not-allowed}
+input{width:100%;padding:13px;border:1px solid #80642d;border-radius:8px;background:#090909;color:white;font-size:16px;margin:6px 0}
+button.action{padding:13px 18px;border:0;border-radius:9px;background:linear-gradient(135deg,#f1d27b,#b8872b);font-weight:bold;font-size:16px;cursor:pointer;margin:5px}
+button.secondary{background:#29241b;color:#f4d98b;border:1px solid #80642d}
+.total{font-size:22px;color:#f4d98b;font-weight:bold;margin:14px}
+@media(max-width:500px){.numbers{gap:4px}.num{font-size:12px;padding:9px 0}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <!-- Sube la imagen original del marranito al mismo repositorio con este nombre exacto: marranito-navideno.png -->
+  <img class="poster" src="marranito-navideno.png" alt="Afiche original del Marranazo Navideño" onerror="this.style.display='none';document.getElementById('imageHelp').style.display='block'">
+  <p id="imageHelp" class="note" style="display:none">Falta subir la imagen original con el nombre <b>marranito-navideno.png</b> a esta misma carpeta del repositorio.</p>
+  <h1>EL MARRANAZO NAVIDEÑO</h1>
+  <div class="tag">Este diciembre no sueñes con tamales…<br><b>¡sueña con ganarte el marrano!</b></div>
+</header>
+<section class="info">
+  <div><small>GRAN PREMIO</small><b>🐷 Un marrano</b></div>
+  <div><small>VALOR POR BOLETA</small><b>$20.000 COP</b></div>
+  <div><small>FECHA DEL SORTEO</small><b>7 de diciembre de 2026</b></div>
+  <div><small>JUEGA CON</small><b>Últimas 2 cifras de la Lotería de Cundinamarca</b></div>
+</section>
+<section class="panel">
+  <h2>Escoge tus números</h2>
+  <p class="note">Toca las boletas disponibles para seleccionarlas.</p>
+  <div class="legend"><span><i class="dot" style="background:#f4e5bf"></i>Disponible</span><span><i class="dot" style="background:#d8ad48"></i>Seleccionado</span><span><i class="dot" style="background:#702b3a"></i>Vendido</span></div>
+  <div class="numbers" id="numbers"></div>
+</section>
+<section class="panel">
+  <h2>Reserva tus boletas</h2>
+  <p class="note">Nequi / Llave: <b>310 356 1818</b><br>Responsable: William Téllez</p>
+  <input id="buyer" placeholder="Nombre completo">
+  <input id="phone" type="tel" placeholder="Número de celular">
+  <div class="total" id="total">Total: $0</div>
+  <button class="action" id="reserve">Reservar por WhatsApp</button>
+  <button class="action secondary" id="clear">Limpiar selección</button>
+</section>
+<p class="note" style="text-align:center">¡Mucha suerte y que esta Navidad el marrano se vaya para tu casa! 🎄</p>
+</main>
+<script>
+const PRICE=20000, WHATSAPP='573103561818';
+const selected=new Set();
+let sold=new Set(JSON.parse(localStorage.getItem('marranazo_sold')||'[]'));
+const grid=document.getElementById('numbers');
+const money=n=>'$'+n.toLocaleString('es-CO')+' COP';
+function render(){
+ grid.innerHTML='';
+ for(let i=0;i<100;i++){
+  const n=String(i).padStart(2,'0'),b=document.createElement('button');
+  b.type='button';b.textContent=n;b.className='num'+(sold.has(n)?' sold':selected.has(n)?' chosen':'');
+  b.disabled=sold.has(n);
+  b.onclick=()=>{selected.has(n)?selected.delete(n):selected.add(n);render()};
+  grid.appendChild(b);
+ }
+ document.getElementById('total').textContent='Total: '+money(selected.size*PRICE)+' ('+selected.size+' boletas)';
+}
+document.getElementById('clear').onclick=()=>{selected.clear();render()};
+document.getElementById('reserve').onclick=()=>{
+ if(!selected.size){alert('Selecciona al menos una boleta.');return}
+ const name=document.getElementById('buyer').value.trim();
+ const phone=document.getElementById('phone').value.trim();
+ if(!name||!phone){alert('Escribe tu nombre y celular.');return}
+ const nums=[...selected].sort();
+ const msg=`Hola, quiero reservar boletas del Marranazo Navideño.%0ANombre: ${encodeURIComponent(name)}%0ACelular: ${encodeURIComponent(phone)}%0ANúmeros: ${nums.join(', ')}%0ACantidad: ${nums.length}%0ATotal: ${encodeURIComponent(money(nums.length*PRICE))}`;
+ window.open('https://wa.me/'+WHATSAPP+'?text='+msg,'_blank');
+};
+render();
+</script>
+</body>
+</html>
