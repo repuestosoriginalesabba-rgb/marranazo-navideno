@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>Marranazo Navideño | Talonario</title>
+<style>
+:root{--gold:#d8ad48;--cream:#f7edcf;--red:#7c1726;--black:#090909}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#292114 0,#090909 48%);color:var(--cream);font-family:Arial,Helvetica,sans-serif}
+main{max-width:760px;margin:auto;padding:18px}
+.hero{border:1px solid #a98232;border-radius:22px;overflow:hidden;background:linear-gradient(145deg,#17130d,#050505);box-shadow:0 12px 35px #0008}
+.art{min-height:235px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px 12px;background:radial-gradient(circle,#59431c 0,#17120b 54%,#080808 100%)}
+.pig{font-size:100px;line-height:1.1;filter:drop-shadow(0 8px 5px #000)}
+.chain{font-size:29px;margin-top:-4px}
+h1{font-family:Georgia,serif;color:var(--gold);font-size:clamp(30px,8vw,48px);margin:8px 0;text-shadow:0 2px 12px #000}
+.slogan{font-size:17px;line-height:1.45;margin:8px auto 0;max-width:520px}
+.content{padding:20px}
+h2{color:var(--gold);font-family:Georgia,serif;margin:0 0 12px}
+.info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+.info div{background:#17140e;border:1px solid #59451e;border-radius:12px;padding:12px}
+.info b{display:block;color:var(--gold);font-size:12px;text-transform:uppercase;margin-bottom:5px}
+.info span{font-size:15px}
+.price{font-size:28px;color:var(--gold);font-weight:bold;text-align:center;margin:12px 0}
+.pay{background:#17140e;border:1px solid #59451e;padding:14px;border-radius:14px;line-height:1.6}
+button{border:0;border-radius:12px;padding:13px 16px;font-weight:bold;font-size:15px;cursor:pointer}
+.gold{background:linear-gradient(135deg,#f1d27a,#b88725);color:#171006}
+.dark{background:#29231a;color:var(--cream);border:1px solid #8a6b2d}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.num{padding:12px 2px;background:#f2e6c4;color:#211a0e;border:1px solid #d7bd7d;border-radius:9px;font-size:16px}
+.num.selected{background:#d8ad48;color:#160f04;outline:2px solid #fff0b3}
+.num.sold{background:#741b2a;color:#fff;opacity:.85;border-color:#a64b58;text-decoration:line-through}
+.num:disabled{cursor:not-allowed}
+.small{font-size:13px;color:#d6c8a4;line-height:1.5}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-top:12px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+footer{text-align:center;color:#a99a75;font-size:12px;padding:20px 5px}
+input{padding:12px;border-radius:9px;border:1px solid #8a6b2d;background:#100e0a;color:#fff;width:100%;margin:7px 0}
+@media(min-width:560px){.grid{grid-template-columns:repeat(10,1fr)}}
+</style>
+</head>
+<body>
+<main>
+<section class="hero">
+ <div class="art">
+  <div class="pig" aria-label="Marranito navideño">🐷</div>
+  <div class="chain">⛓️ ✨</div>
+  <h1>MARRANAZO NAVIDEÑO</h1>
+  <p class="slogan">Este diciembre no sueñes con tamales…<br><strong style="color:#f1d27a">¡sueña con ganarte el marrano!</strong></p>
+ </div>
+ <div class="content">
+  <h2>🎁 Información del sorteo</h2>
+  <div class="info">
+   <div><b>Premio</b><span>Marrano de 6 arrobas</span></div>
+   <div><b>Fecha del sorteo</b><span>7 de diciembre de 2026</span></div>
+   <div><b>Resultado</b><span>Dos últimas cifras de la Lotería de Cundinamarca</span></div>
+   <div><b>Responsable</b><span>William Téllez</span></div>
+  </div>
+  <div class="price">$20.000 cada boleta</div>
+  <div class="pay"><strong style="color:#e4bd61">Pagos por Nequi o Llave</strong><br>310 356 1818<br><span class="small">Titular: William Téllez</span></div>
+ </div>
+</section>
+
+<section class="content">
+ <h2>🎟️ Elige tus números</h2>
+ <p class="small">Selecciona uno o varios números disponibles. Luego pulsa “Reservar por WhatsApp” para enviar tu solicitud.</p>
+ <div class="legend">
+  <span><i class="dot" style="background:#f2e6c4"></i>Disponible</span>
+  <span><i class="dot" style="background:#d8ad48"></i>Seleccionado</span>
+  <span><i class="dot" style="background:#741b2a"></i>Vendido</span>
+ </div>
+ <div class="grid" id="numbers"></div>
+ <p id="summary" class="price" style="font-size:19px">0 números seleccionados · Total: $0</p>
+ <div class="actions">
+  <button class="gold" onclick="reserve()">Reservar por WhatsApp</button>
+  <button class="dark" onclick="clearSelection()">Limpiar selección</button>
+ </div>
+ <p class="small">La reserva queda pendiente de confirmación por WhatsApp y del pago.</p>
+</section>
+
+<section class="content" style="border-top:1px solid #59451e">
+ <h2>Administración del talonario</h2>
+ <p class="small">Solo el organizador debe usar esta sección para marcar números vendidos en este dispositivo.</p>
+ <input id="adminPass" type="password" placeholder="Clave de administración">
+ <div class="actions">
+  <button class="dark" onclick="adminLogin()">Ingresar</button>
+  <button class="dark" onclick="adminLogout()">Salir</button>
+ </div>
+ <div id="adminPanel" hidden>
+  <p class="small">Modo administrador activo. Toca un número para marcarlo como vendido o disponible.</p>
+ </div>
+</section>
+<footer>MARRANAZO NAVIDEÑO · ¡Mucha suerte!<br>Comparte este talonario con tus amigos y familiares.</footer>
+</main>
+<script>
+const WA="573103561818";
+const ADMIN_KEY="FAZENDA2026";
+const soldKey="marranazo_sold_2026";
+let sold=new Set(JSON.parse(localStorage.getItem(soldKey)||"[]"));
+let selected=new Set();
+let admin=false;
+const grid=document.getElementById("numbers");
+function money(n){return "$"+n.toLocaleString("es-CO")}
+function draw(){
+ grid.innerHTML="";
+ for(let i=0;i<100;i++){
+  const n=String(i).padStart(2,"0");
+  const b=document.createElement("button");
+  b.className="num"+(sold.has(n)?" sold":"")+(selected.has(n)?" selected":"");
+  b.textContent=n;
+  b.disabled=sold.has(n)&&!admin;
+  b.title=sold.has(n)?"Vendido":(selected.has(n)?"Seleccionado":"Disponible");
+  b.onclick=()=>{if(admin){if(sold.has(n))sold.delete(n);else{sold.add(n);selected.delete(n)}localStorage.setItem(soldKey,JSON.stringify([...sold]));draw();}else if(!sold.has(n)){if(selected.has(n))selected.delete(n);else selected.add(n);draw();}};
+  grid.appendChild(b);
+ }
+ document.getElementById("summary").textContent=`${selected.size} número(s) seleccionado(s) · Total: ${money(selected.size*20000)}`;
+}
+function reserve(){
+ if(!selected.size){alert("Primero selecciona al menos un número disponible.");return;}
+ const nums=[...selected].sort().join(", ");
+ const msg=`Hola, quiero reservar los números ${nums} del Marranazo Navideño. Total: ${money(selected.size*20000)}. ¿Me confirmas la disponibilidad y los datos para el pago?`;
+ window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(msg),"_blank");
+}
+function clearSelection(){selected.clear();draw();}
+function adminLogin(){
+ if(document.getElementById("adminPass").value===ADMIN_KEY){admin=true;document.getElementById("adminPanel").hidden=false;alert("Modo administrador activado.");draw();}
+ else alert("Clave incorrecta.");
+}
+function adminLogout(){admin=false;document.getElementById("adminPanel").hidden=true;draw();}
+draw();
+</script>
+</body>
+</html>
