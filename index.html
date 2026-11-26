@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>El Marranazo Navideño | La Fazenda</title>
+<style>
+:root {
+  --gold:#d8b45a;
+  --black:#090909;
+  --blue:#2865a0;
+  --gray:#393939;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at top,#302719,#111 55%,#050505);
+  color:#fff2d5;
+  font-family:Arial,sans-serif;
+}
+.wrap{max-width:1050px;margin:auto;padding:14px}
+.top{
+  display:flex;justify-content:space-between;
+  padding:12px;color:#e8c66e;font-weight:bold;
+}
+.hero{
+  border:2px solid var(--gold);
+  border-radius:18px;overflow:hidden;
+  background:#080808;
+  box-shadow:0 10px 35px #000;
+}
+.poster{display:block;width:100%;height:auto}
+.hero-foot{
+  padding:16px;text-align:center;
+  color:#ffe29a;font-weight:bold;
+  background:linear-gradient(90deg,#17130b,#44351c,#17130b);
+}
+h1{text-align:center;color:var(--gold);font-size:clamp(27px,5vw,42px)}
+.subtitle{text-align:center;line-height:1.5}
+.info{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:10px;margin:20px 0;
+}
+.info div{
+  text-align:center;padding:15px 8px;
+  border:1px solid var(--gold);border-radius:12px;
+  background:#19150e;
+}
+.info strong{display:block;color:#f5d477;margin-bottom:7px}
+.section{
+  background:linear-gradient(145deg,#211e17,#0b0b0b);
+  border:1px solid #a9863e;border-radius:16px;
+  padding:16px;margin:18px 0;
+}
+h2{color:#f5d477}
+.legend{display:flex;gap:13px;flex-wrap:wrap;font-size:13px}
+.swatch{display:inline-block;width:13px;height:13px;border-radius:4px}
+.available-color{background:#d8b45a}
+.reserved-color{background:#2865a0}
+.sold-color{background:#393939}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.stat{text-align:center;background:#100d08;border:1px solid #765b29;padding:10px;border-radius:10px}
+.stat b{display:block;color:#f5d477;font-size:23px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.num{
+  border:2px solid #f2d17b;border-radius:8px;
+  padding:12px 2px;background:linear-gradient(#ffe6a0,#bd9034);
+  color:#211707;font-weight:bold;font-size:17px;
+}
+.num.selected{outline:3px solid white}
+.num.reserved{background:var(--blue);color:white;border-color:#9dcfff}
+.num.sold{background:var(--gray);color:white;border-color:#777;text-decoration:line-through}
+.num:disabled{cursor:not-allowed;opacity:.9}
+.buybox{
+  margin-top:18px;padding:15px;
+  border:2px solid var(--gold);border-radius:14px;
+  background:#17130b;
+}
+.total{font-size:25px;color:#ffe17c;font-weight:bold}
+input{
+  width:100%;padding:13px;margin:6px 0;
+  border-radius:9px;border:1px solid var(--gold);
+  background:#fff8e8;font-size:16px;
+}
+button{cursor:pointer}
+.mainbtn{
+  width:100%;padding:15px;margin-top:10px;
+  border:0;border-radius:10px;
+  background:linear-gradient(#f0d58c,#b58a35);
+  color:#170f05;font-weight:bold;font-size:16px;
+}
+.note{font-size:13px;line-height:1.5;color:#e4cfaa}
+.footer{text-align:center;padding:25px;color:#f5d477;font-weight:bold}
+@media(min-width:650px){
+ .grid{grid-template-columns:repeat(10,1fr)}
+ .info{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <span>✦ LA FAZENDA ✦</span>
+  <span>🎄 RIFA NAVIDEÑA</span>
+</div>
+
+<div class="hero">
+  <img class="poster" src="marranito-navideno.png"
+       alt="La Fazenda presenta El Marranazo Navideño">
+  <div class="hero-foot">
+    🎁 ¡Este diciembre no sueñes con tamales… sueña con ganarte el marrano! 🐷
+  </div>
+</div>
+
+<h1>EL MARRANAZO NAVIDEÑO</h1>
+<p class="subtitle">
+  ¡Que esta Navidad el marrano se vaya para tu casa!
+  Escoge tus números de la suerte.
+</p>
+
+<div class="info">
+  <div>🏆<strong>PREMIO</strong>Un marrano de 6 arrobas</div>
+  <div>📅<strong>SORTEO</strong>7 de diciembre de 2026</div>
+  <div>🎱<strong>JUEGA CON</strong>Dos últimas cifras de la Lotería de Cundinamarca</div>
+  <div>💰<strong>VALOR</strong>$20.000 por número</div>
+</div>
+
+<section class="section">
+<h2>🎟️ Escoge tus números</h2>
+<div class="legend">
+  <span><i class="swatch available-color"></i> Disponibles</span>
+  <span><i class="swatch reserved-color"></i> Reservados</span>
+  <span><i class="swatch sold-color"></i> Vendidos</span>
+</div>
+
+<div class="stats">
+  <div class="stat"><b id="available">100</b>Disponibles</div>
+  <div class="stat"><b id="reserved">0</b>Reservados</div>
+  <div class="stat"><b id="sold">0</b>Vendidos</div>
+</div>
+
+<div class="grid" id="numbers"></div>
+
+<div class="buybox">
+  <h2>Tu selección</h2>
+  <p id="chosen">Aún no has elegido números.</p>
+  <p class="total" id="total">$0 COP</p>
+  <input id="name" placeholder="Tu nombre" maxlength="80">
+  <input id="phone" placeholder="Tu celular" inputmode="tel">
+  <button class="mainbtn" onclick="reserve()">
+    💚 SOLICITAR POR WHATSAPP
+  </button>
+  <p class="note">
+    Nequi: 310 356 1818<br>
+    Responsable: William Téllez.<br>
+    La reserva debe ser confirmada por WhatsApp.
+  </p>
+</div>
+</section>
+
+<section class="section">
+<h2>💳 ¿Cómo participar?</h2>
+<p>1. Escoge uno o varios números disponibles.</p>
+<p>2. Escribe tu nombre y celular.</p>
+<p>3. Envía tu solicitud por WhatsApp.</p>
+<p>4. William confirmará la reserva y el pago.</p>
+</section>
+
+<div class="footer">🍀 ¡Mucha suerte y feliz Navidad! 🎄</div>
+</div>
+
+<script>
+const PRICE=20000;
+const WHATSAPP="573103561818";
+const selected=new Set();
+const statuses={};
+
+for(let i=0;i<100;i++){
+  statuses[String(i).padStart(2,"0")]="available";
+}
+
+function money(n){
+  return new Intl.NumberFormat("es-CO").format(n);
+}
+
+function render(){
+  const grid=document.getElementById("numbers");
+  grid.innerHTML="";
+  let counts={available:0,reserved:0,sold:0};
+
+  for(let i=0;i<100;i++){
+    const n=String(i).padStart(2,"0");
+    const status=statuses[n];
+    counts[status]++;
+
+    const btn=document.createElement("button");
+    btn.className="num "+status+(selected.has(n)?" selected":"");
+    btn.textContent=n;
+    btn.disabled=status!=="available";
+
+    btn.onclick=()=>{
+      if(selected.has(n))selected.delete(n);
+      else selected.add(n);
+      render();
+    };
+    grid.appendChild(btn);
+  }
+
+  document.getElementById("available").textContent=counts.available;
+  document.getElementById("reserved").textContent=counts.reserved;
+  document.getElementById("sold").textContent=counts.sold;
+
+  const nums=[...selected].sort();
+  document.getElementById("chosen").textContent=
+    nums.length?"Números: "+nums.join(", "):"Aún no has elegido números.";
+  document.getElementById("total").textContent=
+    "$"+money(nums.length*PRICE)+" COP";
+}
+
+function reserve(){
+  const nums=[...selected].sort();
+  const name=document.getElementById("name").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+
+  if(!nums.length){
+    alert("Primero selecciona tus números.");
+    return;
+  }
+  if(!name||!phone){
+    alert("Escribe tu nombre y celular.");
+    return;
+  }
+
+  const message=
+    "Hola, William. Soy "+name+
+    ", celular "+phone+
+    ". Quiero solicitar los números "+nums.join(", ")+
+    " para El Marranazo Navideño. Total: $"+
+    money(nums.length*PRICE)+
+    " COP. Por favor, confirma su disponibilidad.";
+
+  window.open(
+    "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message),
+    "_blank"
+  );
+}
+
+render();
+</script>
+</body>
+</html>
